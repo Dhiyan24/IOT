@@ -1,0 +1,72 @@
+Smart Sensitive Windows 
+
+
+#define BLYNK_TEMPLATE_ID "TMPLqy_0xeti"
+#define BLYNK_TEMPLATE_NAME "dht11"       
+#define BLYNK_AUTH_TOKEN "eWgKv4-jTJ2swUtmjRuf_54TR9RC228_        "
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <DHT.h>
+#include <Servo.h>  
+char auth[] = BLYNK_AUTH_TOKEN;
+char ssid[] = "Dhiyan....,"; // type your wifi name
+char pass[] = "12345678"; // type your wifi password
+#define DHTPIN 14 // Mention the digital pin where you connected 
+#define DHTTYPE DHT11 // DHT 11
+Servo s1; 
+DHT dht(DHTPIN, DHTTYPE);
+BlynkTimer timer;
+void raindrop() {
+ int rainSensor = analogRead(A0);
+ rainSensor = map(rainSensor, 0, 1023, 10, 0);
+ Blynk.virtualWrite(V2, rainSensor);
+ Serial.print("Rain : ");
+ Serial.println(rainSensor);
+if(A0 > 5){
+ s1.attach(0);
+  delay(1000);
+   s1.write(0);    
+ }
+else
+{
+  delay(1000);
+   s1.write(90);
+}
+}
+void sendSensor(){
+ float h = dht.readHumidity();
+ float t = dht.readTemperature(); // or dht.readTemperature 
+ if (isnan(h) || isnan(t)) {
+ Serial.println("Failed to read from DHT sensor!");
+ return;
+ }
+ Blynk.virtualWrite(V1, h);
+ Blynk.virtualWrite(V0, t);
+ Serial.print("Temperature : ");
+ Serial.print(t);
+ Serial.print(" Humidity : ");
+ Serial.println(h);
+
+ if(t < 28){
+
+ s1.attach(0);
+  delay(1000);
+   s1.write(0); 
+   s1.write(90);  
+   delay(1000);  
+   s1.write(180);  
+   delay(1000);  
+ }
+}
+void setup(){
+ Serial.begin(115200);
+ Blynk.begin(auth, ssid, pass);
+ dht.begin();
+ timer.setInterval(2500L,sendSensor);
+ timer.setInterval(2500L, raindrop);
+}
+void loop(){
+ Blynk.run();
+ timer.run();
+}
