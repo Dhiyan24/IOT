@@ -1,0 +1,9 @@
+3.	PROBLEM STATEMENT
+
+The problem we aim to address is the lack of an automated system for managing windows in response to rainfall, temperature changes, and optimizing natural lighting in buildings. Currently, occupants manually control windows, resulting in inefficient energy usage and inconvenience.
+
+ The absence of an intelligent system that can autonomously detect rainfall, adjust window positions based on temperature, and follow phototropism hinders the creation of a comfortable and energy-efficient indoor environment.
+
+Our goal is to develop an IoT program that integrates various sensors and actuators to automatically close windows when it rains, adjust window positions to maintain a comfortable indoor temperature, and optimize natural lighting based on the sun's position.
+ 
+By implementing this program, we aim to provide an efficient and sustainable solution that enhances occupant comfort, reduces energy consumption, and promotes a healthier living environment.
